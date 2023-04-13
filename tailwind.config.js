@@ -17,6 +17,16 @@ module.exports = {
         textLight: "#121212",
         border: "#2f2f3c",
       },
+      backgroundColor: {
+        bgBlack: "#000",
+        bgWhite: "#fff",
+      },
+      backgroundImage: {
+        "light-bgImg": "linear-gradient(to top, #f0f0f0, rgba(#fff,0))",
+      },
+      borderRadius: {
+        "4xl": "30px",
+      },
     },
   },
   plugins: [],

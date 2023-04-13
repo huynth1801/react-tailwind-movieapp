@@ -1,10 +1,11 @@
-import logo from "../assets/img/Netflix_icon.svg.png";
+import logo from "../../assets/img/Netflix_icon.svg.png";
 import { Link, useLocation } from "react-router-dom";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { AiOutlineHome, AiOutlineMenu } from "react-icons/ai";
 import { BiMoviePlay } from "react-icons/bi";
 import { TfiVideoCamera } from "react-icons/tfi";
 import { useRef, useState } from "react";
+import "./Header.css";
 
 const headerNav = [
   {
@@ -26,6 +27,7 @@ const headerNav = [
 
 const Header = () => {
   const { pathname } = useLocation();
+  const headerRef = useRef(null);
   const active = headerNav.findIndex((e) => e.path === pathname);
   const [open, setOpen] = useState(false);
 
@@ -34,10 +36,13 @@ const Header = () => {
   };
 
   return (
-    <div className="header h-32 fixed top-0 left-0 w-full items-center justify-center z-99">
+    <div
+      className="header h-32 fixed top-0 left-0 w-full items-center justify-center z-99"
+      ref={headerRef}
+    >
       <div className="flex justify-between items-center px-8 max-w-[1660px] m-auto h-full">
         <div className="flex items-center justify-between w-full md:w-0">
-          <div className="logo text-4xl flex items-center">
+          <div className="logo text-4xl font-semibold hover:text-btn flex items-center dark:text-textLight">
             <img
               src={logo}
               alt="Website logo"
@@ -52,12 +57,14 @@ const Header = () => {
             <AiOutlineMenu />
           </div>
         </div>
-        <div className="hidden md:block">
-          <ul className=" md:flex md:justify-between md:items-center ">
+        <div className="hidden md:block header__nav">
+          <ul className=" md:flex md:justify-between md:items-center">
             {headerNav.map((item, index) => (
               <li
                 key={index}
-                className="mx-8 my-8 md:my-0 text-2xl font-semibold flex items-center "
+                className={`mx-8 my-8 md:my-0 text-2xl font-semibold flex items-center relative py-[5px] hover:text-btn ${
+                  index === active ? "active" : ""
+                }`}
               >
                 <div className="md:hidden mx-4">{item.icon}</div>
                 <Link to={item.path}>{item.display}</Link>
@@ -73,15 +80,16 @@ const Header = () => {
           </ul>
         </div>
 
-        <nav aria-label="Sidebar">
-          <div className="h-screen px-2 py-4 overflow-y-auto ">
-            <ul
-              className={`fixed h-full shadow-lg z-1200 bg-white
+        <nav
+          aria-label="Sidebar"
+          className={`fixed h-screen shadow-lg bg-white overflow-hidden
                     text-black inset-y-0  left-0 w-70 
                     transition duration-500 ease transform ease-in-out ${
                       open ? null : "-translate-x-full"
                     }`}
-            >
+        >
+          <div className="h-full px-2 py-4 overflow-y-auto ">
+            <ul>
               {headerNav.map((item, index) => (
                 <li
                   key={index}
